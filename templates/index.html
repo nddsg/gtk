@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+
+    <title>Guess the Karma</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/index.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation"><a href="#">About</a>
+                    </li>
+                    <li role="presentation"><a href="#">New Game</a>
+                    </li>
+                    <li class="dropdown">
+                    	<a class="dropdown-toggle" data-toggle="dropdown">Choose Subreddit
+                    		<span class="caret"></span>
+                    	</a>
+                    	<ul class="dropdown-menu">
+	                    	<li role="presentation"><a href="#">Ex1</a></li>
+	                    	<li role="presentation"><a role="menuitem" href="#">Ex2</a></li>
+	                    	<li role="presentation"><a role="menuitem" href="#">Ex3</a></li>
+                    	</ul>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Guess the Karma</h3>
+        </div>
+
+        <div class="jumbotron" style="padding-top:3%;padding-bottom:5%;margin-bottom:1%">
+			<div class="row">
+				<h2 id="caption-subreddit" style="padding-bottom:2%">Subreddit (i/n)</h2>
+				<div class="col-md-6">
+<!-- 					<h4 id="caption-left">Left Image</h4> -->
+					<div class="thumbnail" style="height:180px">
+						<img src="http://i.imgur.com/IUy9gT6.jpg,2014,5,2,1399019870,2014_5_2" alt="Left Image" style="max-height:100%" id="left-image"/>
+					</div>
+					<div class="caption">
+						<p id="caption-left">caption for left image</p>
+					</div>
+				</div>
+				<div class="col-md-6">
+<!-- 					<h4 id="caption-right">Right Image</h4> -->
+					<div class="thumbnail" style="height:180px">
+						<img src="http://i.imgur.com/fmH4N3g.jpg,2014,5,18,1400372954,2014_5_18" alt="Right Image" style="max-height:100%" id="right-image"/>
+					</div>
+					<div class="caption">
+						<p id="caption-right">caption for right image</p>
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="row">
+        	<h2 id="question" style="padding-bottom:2%;width:inherit;text-align: center">Example Question</h2>
+			<div class="col-md-6">
+				<button id="button-left" type="button" class="btn btn-primary btn-block" id="button-left">Left Image</button>
+			</div>
+			<div class="col-md-6">
+				<button id="button-right" type="button" class="btn btn-primary btn-block" id="button-right">Right Image</button>
+			</div>
+		</div>
+ 
+<!--
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <h4>Bucket List</h4>
+                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+ 
+                <h4>Bucket List</h4>
+                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+ 
+                <h4>Bucket List</h4>
+                <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+            </div>
+ 
+            <div class="col-lg-6">
+                <h4>Bucket List</h4>
+                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+ 
+                <h4>Bucket List</h4>
+                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+ 
+                <h4>Bucket List</h4>
+                <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+            </div>
+        </div>
+
+ 
+        <footer class="footer">
+            <p>&copy; Company 2015</p>
+        </footer>
+ -->
+    </div>
+</body>
+ 
+</html>
