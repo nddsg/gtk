@@ -53,12 +53,14 @@ class API():
 
         output = dumps({
             "image1": {
+                "image_id": results[idx1].id,
 	            "subreddit": results[idx1].subreddit,
 	            "score": results[idx1].score,
 	            "title": results[idx1].title,
             	"url": results[idx1].image
             },
             "image2": {
+                "image_id": results[idx2].id,
 	            "subreddit": results[idx2].subreddit,
 	            "score": results[idx2].score,
 	            "title": results[idx2].title,
@@ -77,7 +79,7 @@ if __name__ == '__main__':
 
     api = API(session_maker)
 
-    app.route('/random_pair.json')(api.random_pair)
+    app.route('/random_pair.json', methods=['POST'])(api.random_pair)
     app.route('/dropdown_populate.json')(api.dropdown_populate)
 
     app.run(host='0.0.0.0')
