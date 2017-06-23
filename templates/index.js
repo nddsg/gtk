@@ -20,14 +20,14 @@ function surveyQuestionClosure(text, globalState, result_variable, delay, callba
     		question.fadeOut(delay);
 			buttonLeft.fadeOut(delay);
 			buttonRight.fadeOut(delay);
-			result_variable = globalState.surveyQuestionData.image1.image_id;
+			result_variable.value = globalState.surveyQuestionData.image1.image_id;
 			if (callback !== undefined) callback();
 		});
 		buttonRight.unbind("click").click(function(){
     		question.fadeOut(delay);
     		buttonLeft.fadeOut(delay);
 			buttonRight.fadeOut(delay);
-			result_variable = globalState.surveyQuestionData.image2.image_id;
+			result_variable.value = globalState.surveyQuestionData.image2.image_id;
 			if (callback !== undefined) callback();
 		});
 	}
@@ -48,19 +48,26 @@ function loadPair(globalState, callback, delayOut=long_delay, delayIn=short_dela
     
     var postData = {};
     
+    if (debug) {
+        console.log("Validating data to send to server:");
+        console.log(globalState.roundData);
+    }
+    
     // Check if roundData is non-null; if it is valid, include it in the request for the server to record
-    if (globalState.roundData.preferredChoice !== null &&
-        globalState.roundData.upvoteChoice !== null &&
+    if (globalState.roundData.preferredChoice.value !== null &&
+        globalState.roundData.upvoteChoice.value !== null &&
         globalState.roundData.preferredChoiceTime !== null &&
         globalState.roundData.upvoteChoiceTime !== null
        ) {
            postData = globalState.roundData;
        }
     
-    
     // Send the request as a POST request. If there is not valid data, nothing will be sent. If there is valid data, it will be sent. The request will be a new pair of images, regardless.
     $.post("/random_pair.json", postData, function(data) {
-        if (debug) console.log("In loadPair: data was returned from the server.");
+        if (debug) {
+            console.log("In loadPair: data was returned from the server. The data was:");
+            console.log(data);
+        }
         
         globalState.startTime = new Date();
         globalState.surveyQuestionData = data;
@@ -81,7 +88,7 @@ function loadPair(globalState, callback, delayOut=long_delay, delayIn=short_dela
             $(this).attr("src", data.image2.url).attr("alt", data.image2.title).fadeIn(delayIn);
         });
         captionSubreddit.done(function(){
-            $(this).text(data.image1.subreddit).fadeIn(delayIn);
+            $(this).text(data.image1.subreddit + " (" + globalState.roundNumber + "/" + globalState.roundTotal + ")").fadeIn(delayIn);
         });
         captionLeft.done(function(){
             $(this).text(data.image1.title).fadeIn(delayIn);
@@ -95,9 +102,11 @@ function loadPair(globalState, callback, delayOut=long_delay, delayIn=short_dela
         $("#result-right").promise().done(function(){
             $(this).text("Upvotes: " + data.image2.score);
         });
+        globalState.correctImageId = (data.image1.score > data.image2.score) ? data.image1.image_id : data.image2.image_id;
             
         if (callback !== undefined) {    
             $.when.apply(null, [leftImage, rightImage, captionSubreddit, captionLeft, captionRight]).done(function(){
+                $("#jtron").css({backgroundColor: "rgb(240,240,240)"});
                 callback();  
             });
         }
@@ -110,20 +119,25 @@ $(document).ready(function (){
     var roundData = {
         preferredChoiceTime: null,
         upvoteChoiceTime: null,
-        preferredChoice: null,
-        upvoteChoice: null
+        upvoteChoice: {
+            value: null
+        },
+        preferredChoice: {
+            value: null
+        }
     };
     
     var globalState = {
         startTime: null,
         surveyQuestionData: null,
         roundNumber: 0,
-        roundData: roundData
+        roundTotal: 10,
+        roundData: roundData,
+        correctImageId: null,
     };
         
     // Declare all survey questions here; define what they are later. Necessary because of interdependencies.
     var upvoteQuestion, preferQuestion;
-    
     
     upvoteQuestion = surveyQuestionClosure(
         "Which got more upvotes?",
@@ -131,6 +145,18 @@ $(document).ready(function (){
         globalState.roundData.upvoteChoice,
         0,
         function () {
+            if (globalState.correctImageId == globalState.roundData.upvoteChoice.value) {
+                if (debug) {
+                    console.log("Right answer!");
+                }
+                $("#jtron").css({backgroundColor: "rgb(0, 225, 0)"});
+    		} else {
+        		if (debug) {
+        		    console.log("Wrong answer!");
+        		}
+        		$("#jtron").css({backgroundColor: "rgb(225, 0, 0)"});
+    		}
+            
             // Calculate the time delta it took the user to press the button
             var currentTime = new Date();
             roundData.upvoteChoiceTime = currentTime - globalState.startTime;
@@ -160,7 +186,6 @@ $(document).ready(function (){
         	upvoteQuestion()
         }
     );
-    
     
     // Load the first set of questions
     loadPair(globalState, preferQuestion, 0, 0);

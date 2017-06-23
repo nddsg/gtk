@@ -10,6 +10,32 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="/index.js"></script>
 
+    <style type="text/css">
+        @media (min-width: 768px) {
+            .container {
+                max-width: calc(768px*0.8);
+            }
+        }
+        @media (min-width: 960px) {
+            .container {
+                max-width: calc(960px*0.8);
+            }
+        }
+        @media (min-width: 1280px) {
+            .container {
+                max-width: calc(1280px*0.8);
+            }
+        }
+        @media (min-width: 1600px) {
+            .container {
+                max-width: calc(1600px*0.8);
+            }
+        }
+        #jtron{
+            transition: 2s;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -33,7 +59,7 @@
             <h3 class="text-muted">Guess the Karma</h3>
         </div>
 
-        <div class="jumbotron" style="padding-top:3%;padding-bottom:5%;margin-bottom:1%">
+        <div id="jtron" class="jumbotron" style="padding-top:3%;padding-bottom:5%;margin-bottom:1%">
 			<div class="row">
 				<h2 id="caption-subreddit" style="padding-bottom:2%">Subreddit (i/n)</h2>
 				<div class="col-md-6">
@@ -57,10 +83,10 @@
 			</div>
 			<div class="row">
                 <div class="col-md-6">
-                    <h4 id="result-left"></h4>
+                    <h3 id="result-left"></h3>
                 </div>
                 <div class="col-md-6">
-                    <h4 id="result-right"></h4>
+                    <h3 id="result-right"></h3>
                 </div>
 			</div>
         </div>
